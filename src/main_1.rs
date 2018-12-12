@@ -1,7 +1,6 @@
 use std::fs::File;
 use std::ops::{AddAssign, MulAssign};
 use std::io::Read;
-use std::collections::BTreeSet;
 
 #[macro_use]
 extern crate nom;
@@ -49,24 +48,17 @@ fn main() {
     // Let er rip
     let mut buf = &contents[..];
     let mut sum : i32 = 0;
-    let mut history : BTreeSet<i32> = BTreeSet::new();
 
     loop {
         let result = reading(buf);
         match result {
             Ok((remainder, amount)) => {
-                history.insert(sum);
                 sum += amount;
-                println!("Delta of {}. Total now {}", amount, sum);
+                println!("Got {}. Total now {}", amount, sum);
                 buf = remainder;
-
-                if history.contains(&sum) {
-                    println!("Duplicate signal {}", sum);
-                    break;
-                }
             },
 
-            Err(_e) => { buf = &contents[..]; }
+            Err(e) => {break}
         }
     }
 
