@@ -64,7 +64,6 @@ named!(get_rectangle <&[u8], Rectangle>,
 
 const DIM: usize = 1000;
 
-
 fn main() {
     println!("Hello, world!");
     // Get the file
